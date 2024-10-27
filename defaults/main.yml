@@ -1,0 +1,24 @@
+---
+
+# Docker project variables
+
+medusa_project_name: medusa
+
+# Docker project dynamic vars (uses `docker_project_name` prefix, adapt if overriden)
+
+medusa_traefik_loadbalancer_server_port: 8081
+
+
+# Medusa project variables
+
+# lscr.io/linuxserver/medusa image version
+medusa_version: latest
+
+medusa_media_volumes: []
+#  # Downloads directory (blackhole)
+#  - source: "/var/downloads"
+#    target: "/downloads"
+#
+#  # Media directory
+#  - source: "/share/media/series"
+#    target: "/tv"

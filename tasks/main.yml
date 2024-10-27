@@ -1,0 +1,44 @@
+---
+
+## Check
+
+- name: Check variables
+  ansible.builtin.assert:
+    that:
+      - ansible_user_uid     is defined
+      - ansible_user_gid     is defined
+      - medusa_media_volumes is defined
+
+- name: Check media directories
+  ansible.builtin.stat: { path: "{{ item }}" }
+  register: _dir
+  failed_when: not _dir.stat.exists or not _dir.stat.writeable or not (_dir.stat.isdir or _dir.stat.islnk)
+  loop: "{{ medusa_media_volumes | community.general.json_query('[*].source') }}"
+  tags: ["init"]
+
+## Init
+
+- name: Ensure project directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ docker_project_path }}"
+    - "{{ docker_project_path }}/config"
+  tags: ["init"]
+
+## Configure
+
+- name: Template docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker_project_path }}/docker-compose.yml"
+    mode: '0644'
+    validate: "{{ docker_cli }} compose -f %s config"
+    backup: true
+
+## Run
+
+- name: Start app
+  ansible.builtin.include_role: { name: djuuu.docker_project, tasks_from: compose-up }

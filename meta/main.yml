@@ -1,0 +1,31 @@
+---
+dependencies:
+
+  - name: djuuu.docker_project
+    src: https://github.com/Djuuu/ansible-role-docker-project
+    version: main
+
+galaxy_info:
+  namespace: djuuu
+  role_name: medusa_docker
+  author: Julien Tardot
+  description: Install Medusa Docker Compose project.
+
+  issue_tracker_url: https://github.com/Djuuu/ansible-role-medusa-docker
+
+  license: Beerware
+
+  min_ansible_version: '2.11'
+
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+
+  galaxy_tags:
+    - medusa
+    - tv
+    - series

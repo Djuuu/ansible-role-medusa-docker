@@ -1,0 +1,53 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# {{ ansible_managed }}
+# {{ template_fullpath }}
+
+name: {{ docker_project_slug }}
+
+services:
+
+  medusa:
+    container_name: {{ docker_project_slug }}
+    image: lscr.io/linuxserver/medusa:{{ medusa_version }}
+    restart: always
+
+    {{ docker_project_compose_service_additional_options | indent(4) }}
+
+    environment:
+      - PGID={{ ansible_user_gid }}
+      - PUID={{ ansible_user_uid }}
+      - TZ={{ timezone | default('UTC') }}
+
+    volumes:
+      # Medusa config
+      - ./config:/config
+      # Media volumes
+      {% for item in medusa_media_volumes %}
+      - type: bind
+        source: {{ item.source }}
+        target: {{ item.target  }}
+        bind:
+          create_host_path: false
+      {% endfor %}
+
+    labels:
+      {{ traefik_project_base_labels | indent(6) }}
+
+      # Fix calendar content-type header
+      traefik.http.routers.medusa-calendar.rule: {{ traefik_project_base_host_rules }} && Path(`/calendar`)
+      traefik.http.routers.medusa-calendar.entrypoints: https
+      traefik.http.routers.medusa-calendar.middlewares: medusa-calendar-headers@docker
+
+      # .ics endpoint
+      traefik.http.routers.medusa-calendar-ics.rule: {{ traefik_project_base_host_rules }} && Path(`/calendar.ics`)
+      traefik.http.routers.medusa-calendar-ics.entrypoints: https
+      traefik.http.routers.medusa-calendar-ics.middlewares: medusa-calendar-path@docker, medusa-calendar-headers@docker
+
+      traefik.http.middlewares.medusa-calendar-headers.headers.customResponseHeaders.Content-Type: text/calendar; charset=utf-8
+      traefik.http.middlewares.medusa-calendar-headers.headers.customResponseHeaders.X-Content-Type-Options: nosniff
+      traefik.http.middlewares.medusa-calendar-path.replacepath.path: /calendar
+
+networks:
+  {{ docker_project_default_network | indent(2) }}
+
+{{ docker_project_compose_additional_options }}
