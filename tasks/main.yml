@@ -35,7 +35,7 @@
     src: docker-compose.yml.j2
     dest: "{{ docker_project_path }}/docker-compose.yml"
     mode: '0644'
-    validate: "{{ docker_cli | default('docker', true) }} compose -f %s config"
+    validate: "{{ docker_cmd }} compose -f %s config"
     backup: true
 
 ## Run
