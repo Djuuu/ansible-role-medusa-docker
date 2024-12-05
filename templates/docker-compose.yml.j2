@@ -9,7 +9,7 @@ services:
   medusa:
     container_name: {{ docker_project_slug }}
     image: lscr.io/linuxserver/medusa:{{ medusa_version }}
-    restart: always
+    restart: unless-stopped
 
     {{ docker_project_compose_service_additional_options | indent(4) }}
 
