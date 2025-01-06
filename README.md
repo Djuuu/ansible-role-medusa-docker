@@ -38,7 +38,7 @@ Available role variables are listed below, along with default values (see `defau
 
 medusa_project_name: medusa
 
-# Docker project dynamic vars (uses `docker_project_name` prefix, adapt if overriden)
+# Docker project dynamic vars (uses `docker_project_name` prefix, adapt if overridden)
 
 medusa_traefik_loadbalancer_server_port: 8081
 
