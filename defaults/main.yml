@@ -14,6 +14,9 @@ medusa_traefik_loadbalancer_server_port: 8081
 # lscr.io/linuxserver/medusa image version
 medusa_version: latest
 
+# Medusa network mode (bridge|host)
+medusa_network_mode: bridge
+
 medusa_media_volumes: []
 #  # Downloads directory (blackhole)
 #  - source: "/var/downloads"

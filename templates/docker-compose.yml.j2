@@ -10,6 +10,9 @@ services:
     container_name: {{ docker_project_slug }}
     image: lscr.io/linuxserver/medusa:{{ medusa_version }}
     restart: unless-stopped
+    {% if medusa_network_mode == 'host' %}
+    network_mode: host
+    {% endif %}
 
     {{ docker_project_compose_service_additional_options | indent(4) }}
 
@@ -47,7 +50,9 @@ services:
       traefik.http.middlewares.medusa-calendar-headers.headers.customResponseHeaders.X-Content-Type-Options: nosniff
       traefik.http.middlewares.medusa-calendar-path.replacepath.path: /calendar
 
+{% if medusa_network_mode != 'host' %}
 networks:
   {{ docker_project_default_network | indent(2) }}
+{% endif %}
 
 {{ docker_project_compose_additional_options }}
