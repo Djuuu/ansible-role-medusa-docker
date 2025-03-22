@@ -36,6 +36,7 @@ services:
     labels:
       {{ traefik_project_base_labels | indent(6) }}
 
+      {% if docker_project_traefik_enable %}
       # Fix calendar content-type header
       traefik.http.routers.medusa-calendar.rule: {{ traefik_project_base_host_rules }} && Path(`/calendar`)
       traefik.http.routers.medusa-calendar.entrypoints: https
@@ -49,6 +50,7 @@ services:
       traefik.http.middlewares.medusa-calendar-headers.headers.customResponseHeaders.Content-Type: text/calendar; charset=utf-8
       traefik.http.middlewares.medusa-calendar-headers.headers.customResponseHeaders.X-Content-Type-Options: nosniff
       traefik.http.middlewares.medusa-calendar-path.replacepath.path: /calendar
+      {% endif %}
 
 {% if medusa_network_mode != 'host' %}
 networks:
