@@ -17,8 +17,8 @@ services:
     {{ docker_project_compose_service_additional_options | indent(4) }}
 
     environment:
-      - PGID={{ ansible_user_gid }}
-      - PUID={{ ansible_user_uid }}
+      - PUID={{ medusa_puid }}
+      - PGID={{ medusa_pgid }}
       - TZ={{ timezone | default('UTC') }}
 
     volumes:

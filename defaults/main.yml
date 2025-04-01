@@ -14,6 +14,11 @@ medusa_traefik_loadbalancer_server_port: 8081
 # lscr.io/linuxserver/medusa image version
 medusa_version: latest
 
+# UID container is running as
+medusa_puid: "{{ ansible_user_uid }}"
+# GID container is running as
+medusa_pgid: "{{ ansible_user_gid }}"
+
 # Medusa network mode (bridge|host)
 medusa_network_mode: bridge
 
