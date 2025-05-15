@@ -7,14 +7,13 @@ name: {{ docker_project_slug }}
 services:
 
   medusa:
-    container_name: {{ docker_project_slug }}
     image: lscr.io/linuxserver/medusa:{{ medusa_version }}
-    restart: unless-stopped
-    {% if medusa_network_mode == 'host' %}
-    network_mode: host
-    {% endif %}
+    container_name: {{ docker_project_slug }}
+    restart: {{ docker_project_restart }}
 
-    {{ docker_project_compose_service_additional_options | indent(4) }}
+    {{ docker_project_service_network_options | indent(4) }}
+
+    {{ docker_project_service_additional_options | indent(4) }}
 
     environment:
       - PUID={{ medusa_puid }}
@@ -52,9 +51,6 @@ services:
       traefik.http.middlewares.medusa-calendar-path.replacepath.path: /calendar
       {% endif %}
 
-{% if medusa_network_mode != 'host' %}
-networks:
-  {{ docker_project_default_network | indent(2) }}
-{% endif %}
+{{ docker_project_networks }}
 
 {{ docker_project_compose_additional_options }}

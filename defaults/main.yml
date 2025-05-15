@@ -19,9 +19,6 @@ medusa_puid: "{{ ansible_user_uid }}"
 # GID container is running as
 medusa_pgid: "{{ ansible_user_gid }}"
 
-# Medusa network mode (bridge|host)
-medusa_network_mode: bridge
-
 medusa_media_volumes: []
 #  # Downloads directory (blackhole)
 #  - source: "/var/downloads"
