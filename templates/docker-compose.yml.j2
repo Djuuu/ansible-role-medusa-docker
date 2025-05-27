@@ -51,6 +51,9 @@ services:
       traefik.http.middlewares.medusa-calendar-path.replacepath.path: /calendar
       {% endif %}
 
+      # What's up Docker? - https://github.com/getwud/wud
+      wud.watch.digest: true
+
 {{ docker_project_networks }}
 
 {{ docker_project_compose_additional_options }}
