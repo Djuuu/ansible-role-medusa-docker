@@ -50,9 +50,7 @@ services:
       traefik.http.middlewares.medusa-calendar-headers.headers.customResponseHeaders.X-Content-Type-Options: nosniff
       traefik.http.middlewares.medusa-calendar-path.replacepath.path: /calendar
       {% endif %}
-
-      # What's up Docker? - https://github.com/getwud/wud
-      wud.watch.digest: true
+      {{ docker_project_service_additional_labels | indent(6) }}
 
 {{ docker_project_networks }}
 
