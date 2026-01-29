@@ -5,9 +5,9 @@
 - name: Check variables
   ansible.builtin.assert:
     that:
-      - ansible_user_uid     is defined
-      - ansible_user_gid     is defined
-      - medusa_media_volumes is defined
+      - ansible_facts['user_uid'] is defined
+      - ansible_facts['user_gid'] is defined
+      - medusa_media_volumes      is defined
 
 - name: Check media directories
   ansible.builtin.stat: { path: "{{ item }}" }

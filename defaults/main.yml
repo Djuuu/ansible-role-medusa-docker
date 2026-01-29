@@ -15,9 +15,9 @@ medusa_traefik_loadbalancer_server_port: 8081
 medusa_version: latest
 
 # UID container is running as
-medusa_puid: "{{ ansible_user_uid }}"
+medusa_puid: "{{ ansible_facts['user_uid'] }}"
 # GID container is running as
-medusa_pgid: "{{ ansible_user_gid }}"
+medusa_pgid: "{{ ansible_facts['user_gid'] }}"
 
 medusa_media_volumes: []
 #  # Downloads directory (blackhole)
