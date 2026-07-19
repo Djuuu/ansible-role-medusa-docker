@@ -69,6 +69,9 @@ Dependencies
 This role depends on :
 - [djuuu.docker_project](https://github.com/Djuuu/ansible-role-docker-project)
 
+Collections:
+- `community.general` (for the `json_query` filter - requires the `jmespath` Python library)
+
 Some variables allow integration with:
 - [djuuu.traefik_docker](https://github.com/Djuuu/ansible-role-traefik-docker)
 
